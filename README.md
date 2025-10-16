@@ -1,17 +1,25 @@
-<!GVT WWIl> (WORLDWIDE INVESTMENT)
+<!GVT>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GVT140 Investment Portal</title>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
 <style>
 /* --- General Reset & Body --- */
-body { margin:0; padding:0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f6f8; color:#333; }
+body { margin:0; padding:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f6f8; color:#333; }
 .container { max-width:1000px; margin:20px auto; padding:20px; }
+
 /* --- Header --- */
 header { text-align:center; margin-bottom:30px; }
 header h1 { color:#2c3e50; font-size:2.5em; margin-bottom:5px; }
 header p { color:#7f8c8d; font-size:1em; }
+
 /* --- Forms --- */
 .auth { display:flex; justify-content:center; gap:40px; flex-wrap:wrap; margin-bottom:30px; }
 .form-box { background:white; padding:25px; border-radius:15px; box-shadow:0 8px 20px rgba(0,0,0,0.1); width:320px; text-align:center; }
@@ -22,25 +30,31 @@ button:hover { opacity:0.9; }
 button.primary { background:#27ae60; color:white; }
 button.secondary { background:#2980b9; color:white; }
 span { color:#3498db; cursor:pointer; }
+
 /* --- Dashboard --- */
 #dashboard { display:none; }
 #balance { font-size:1.2em; font-weight:bold; margin-bottom:15px; text-align:center; }
+
 /* --- Investment Plans --- */
 #plans { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:30px; }
 .plan { background:white; padding:20px; border-radius:15px; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.1); transition:0.3s; }
 .plan:hover { transform:translateY(-5px); box-shadow:0 10px 20px rgba(0,0,0,0.15); }
 .plan h3 { color:#2c3e50; margin-bottom:10px; }
 .plan p { color:#7f8c8d; margin-bottom:10px; }
+
 /* --- Deposit/Withdraw --- */
 #deposit-withdraw { text-align:center; margin-bottom:30px; }
 #deposit-withdraw button { margin:5px; }
+
 /* --- Calculator --- */
 #calculator { text-align:center; margin-bottom:30px; }
 #calculator input, #calculator select { margin:8px 0; }
+
 /* --- Company Info --- */
 #company-info { background:white; padding:25px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); text-align:center; margin-bottom:50px; }
 #company-info h2 { color:#2c3e50; margin-bottom:15px; }
 #company-info p { line-height:1.6; color:#7f8c8d; margin-bottom:8px; }
+
 /* --- Responsive --- */
 @media(max-width:600px){ .auth { flex-direction:column; } .form-box { width:90%; } }
 </style>
@@ -57,7 +71,7 @@ span { color:#3498db; cursor:pointer; }
 <div class="auth" id="auth-section">
   <div class="form-box" id="login-box">
     <h2>Login</h2>
-    <input type="text" id="login-username" placeholder="Username">
+    <input type="email" id="login-username" placeholder="Email">
     <input type="password" id="login-password" placeholder="Password">
     <button class="primary" onclick="login()">Login</button>
     <p>Don't have an account? <span onclick="toggleForm()">Signup</span></p>
@@ -65,7 +79,7 @@ span { color:#3498db; cursor:pointer; }
 
   <div class="form-box" id="signup-box" style="display:none;">
     <h2>Signup</h2>
-    <input type="text" id="signup-username" placeholder="Username">
+    <input type="email" id="signup-username" placeholder="Email">
     <input type="password" id="signup-password" placeholder="Password">
     <button class="primary" onclick="signup()">Signup</button>
     <p>Already have an account? <span onclick="toggleForm()">Login</span></p>
@@ -139,6 +153,20 @@ span { color:#3498db; cursor:pointer; }
 </div>
 
 <script>
+// --- Firebase Config ---
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "SENDER_ID",
+  appId: "APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const database = firebase.database();
+
 // --- Form Toggle ---
 function toggleForm(){
   const loginBox = document.getElementById('login-box');
@@ -149,82 +177,79 @@ function toggleForm(){
 
 // --- Signup ---
 function signup(){
-  let username = document.getElementById('signup-username').value;
-  let password = document.getElementById('signup-password').value;
-  if(!username || !password){ alert("Enter valid details"); return; }
-  localStorage.setItem(username,password);
-  localStorage.setItem(username+"_balance",0);
-  alert("Signup successful! Login now.");
-  toggleForm();
+  const email = document.getElementById('signup-username').value;
+  const password = document.getElementById('signup-password').value;
+  if(!email || !password){ alert("Enter valid details"); return; }
+
+  auth.createUserWithEmailAndPassword(email,password)
+  .then((userCredential)=>{
+    const user = userCredential.user;
+    database.ref('users/'+user.uid).set({balance:0});
+    alert("Signup successful! Login now.");
+    toggleForm();
+  })
+  .catch((error)=>{ alert(error.message); });
 }
 
 // --- Login ---
 function login(){
-  let username = document.getElementById('login-username').value;
-  let password = document.getElementById('login-password').value;
-  let stored = localStorage.getItem(username);
-  if(stored && stored===password){
-    localStorage.setItem("currentUser",username);
-    showDashboard();
-  } else { alert("Invalid credentials!"); }
+  const email = document.getElementById('login-username').value;
+  const password = document.getElementById('login-password').value;
+
+  auth.signInWithEmailAndPassword(email,password)
+  .then((userCredential)=>{
+    const user = userCredential.user;
+    showDashboardFirebase(user.uid);
+  })
+  .catch((error)=>{ alert(error.message); });
+}
+
+// --- Dashboard ---
+function showDashboardFirebase(uid){
+  document.getElementById("auth-section").style.display="none";
+  document.getElementById("dashboard").style.display="block";
+
+  database.ref('users/'+uid+'/balance').on('value', snapshot=>{
+    const balance = snapshot.val() || 0;
+    document.getElementById("balance").innerText = `Balance: PKR ${balance}`;
+  });
 }
 
 // --- Logout ---
 function logout(){
-  localStorage.removeItem("currentUser");
-  document.getElementById("dashboard").style.display="none";
-  document.getElementById("auth-section").style.display="flex";
-}
-
-// --- Show Dashboard & Update Balance ---
-function showDashboard(){
-  let user = localStorage.getItem("currentUser");
-  if(!user){ alert("Please login"); return; }
-  document.getElementById("user-name").innerText = user;
-  document.getElementById("auth-section").style.display="none";
-  document.getElementById("dashboard").style.display="block";
-  updateBalance();
-}
-
-function updateBalance(){
-  let user = localStorage.getItem("currentUser");
-  let balance = Number(localStorage.getItem(user+"_balance")) || 0;
-  document.getElementById("balance").innerText = `Balance: PKR ${balance}`;
+  auth.signOut().then(()=>{
+    document.getElementById("dashboard").style.display="none";
+    document.getElementById("auth-section").style.display="flex";
+  });
 }
 
 // --- Deposit / Withdraw ---
 function deposit(method){
-  let user = localStorage.getItem("currentUser");
-  if(!user){ alert("Login first!"); return; }
-  let amount = Number(document.getElementById("amount").value);
+  const amount = Number(document.getElementById("amount").value);
   if(amount<=0){ alert("Enter valid amount"); return; }
-  alert(`Deposit PKR ${amount} via ${method}. Follow instructions in new window.`);
-  let url = method==="JazzCash"?"https://www.jazzcash.com.pk/":"https://www.easypaisa.com.pk/";
-  window.open(url,"_blank");
-  let balance = Number(localStorage.getItem(user+"_balance")) || 0;
-  balance += amount;
-  localStorage.setItem(user+"_balance",balance);
-  updateBalance();
+  const uid = auth.currentUser.uid;
+  database.ref('users/'+uid).once('value').then(snapshot=>{
+    let balance = snapshot.val().balance || 0;
+    balance += amount;
+    database.ref('users/'+uid).update({balance:balance});
+    alert(`Deposit PKR ${amount} via ${method} successful.`);
+  });
 }
 
 function withdraw(method){
-  let user = localStorage.getItem("currentUser");
-  if(!user){ alert("Login first!"); return; }
-  let amount = Number(document.getElementById("amount").value);
-  let balance = Number(localStorage.getItem(user+"_balance")) || 0;
-  if(amount<=0 || amount>balance){ alert("Invalid withdrawal amount"); return; }
-  alert(`Withdraw PKR ${amount} to ${method}. Follow instructions in new window.`);
-  let url = method==="JazzCash"?"https://www.jazzcash.com.pk/":"https://www.easypaisa.com.pk/";
-  window.open(url,"_blank");
-  balance -= amount;
-  localStorage.setItem(user+"_balance",balance);
-  updateBalance();
+  const amount = Number(document.getElementById("amount").value);
+  const uid = auth.currentUser.uid;
+  database.ref('users/'+uid).once('value').then(snapshot=>{
+    let balance = snapshot.val().balance || 0;
+    if(amount>balance){ alert("Insufficient balance"); return; }
+    balance -= amount;
+    database.ref('users/'+uid).update({balance:balance});
+    alert(`Withdraw PKR ${amount} to ${method} successful.`);
+  });
 }
 
 // --- Investment ---
 function invest(plan){
-  let user = localStorage.getItem("currentUser");
-  if(!user){ alert("Please login to invest!"); return; }
   alert(`Redirecting to payment for ${plan} plan`);
   window.open("https://www.jazzcash.com.pk/","_blank");
 }
@@ -240,7 +265,10 @@ function calculate(){
 }
 
 // --- Auto show dashboard if logged in ---
-if(localStorage.getItem("currentUser")){ showDashboard(); }
+auth.onAuthStateChanged(user=>{
+  if(user){ showDashboardFirebase(user.uid); }
+});
 </script>
+
 </body>
 </html>
