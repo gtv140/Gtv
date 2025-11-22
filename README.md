@@ -1,244 +1,84 @@
-<NEONS>
-<html lang="en">
+<NEONS><html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neon Earn – Premium Real Earning</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NeonEarn — Full Premium Earning Platform</title>
 <style>
-body {
-  font-family: 'Roboto', sans-serif;
-  margin:0; padding:0;
-  background:#111; color:#fff;
-}
-header {
-  background: linear-gradient(90deg, #0ff, #f0f);
-  padding:1rem;
-  text-align:center;
-  font-weight:bold;
-  color:#000;
-  box-shadow:0 4px 10px rgba(0,0,0,0.5);
-  border-bottom:3px solid #0ff;
-}
-.container { padding:1rem; max-width:600px; margin:0 auto; }
-input, select, button {
-  padding:0.7rem; margin:0.5rem 0; width:100%; border-radius:10px; border:none; font-size:1rem;
-}
-button {
-  background: linear-gradient(90deg, #0ff, #f0f);
-  color:#000; font-weight:bold; cursor:pointer; transition:0.3s;
-}
-button:hover { transform:scale(1.05); }
-.wallet { background:#222; padding:1rem; margin:1rem 0; border-radius:15px; box-shadow:0 0 10px #0ff; }
-table { width:100%; margin-top:1rem; border-collapse:collapse; border-radius:10px; overflow:hidden; }
-th, td { padding:0.5rem; border:1px solid #0ff; text-align:center; }
-.admin-panel { background:#222; padding:1rem; margin:1rem 0; border-radius:15px; box-shadow:0 0 10px #f0f; }
-.hidden { display:none; }
-h2,h3 { text-align:center; color:#0ff; text-shadow:0 0 5px #0ff; }
+    body { margin:0; font-family:Arial, sans-serif; background:#020202; color:#fff; }
+    .header { padding:20px; text-align:center; background:linear-gradient(90deg,#00f0ff,#0077ff,#9d00ff); font-size:28px; font-weight:bold; text-shadow:0 0 15px #00eaff; }
+    .container { padding:20px; }
+    .card { background:rgba(255,255,255,0.05); border:1px solid rgba(0,255,255,0.3); padding:20px; border-radius:15px; margin-bottom:20px; backdrop-filter:blur(10px); box-shadow:0 0 20px #00eaff40; }
+    .btn { display:block; width:100%; padding:15px; text-align:center; background:linear-gradient(90deg,#00f0ff,#0077ff); color:#000; font-weight:bold; text-decoration:none; border-radius:10px; box-shadow:0 0 20px #00f0ff80; margin-top:10px; cursor:pointer; }
+    input, select { width:100%; padding:10px; margin-top:10px; border-radius:8px; border:none; background:rgba(255,255,255,0.1); color:#fff; }
+    label { margin-top:10px; display:block; }
+    .timer { font-size:24px; text-align:center; margin:20px 0; color:#00f0ff; text-shadow:0 0 10px #00eaff; }
+    .balance { font-size:24px; text-align:center; margin:10px 0; color:#0f0; text-shadow:0 0 10px #00eaff; }
+    table { width:100%; border-collapse:collapse; margin-top:10px; }
+    table, th, td { border:1px solid #00f0ff; }
+    th, td { padding:10px; text-align:center; }
+    a { color:#00f0ff; text-decoration:none; }
 </style>
 </head>
 <body>
-
-<header>🌟 Neon Earn – Premium Real Earning 🌟</header>
-
-<div class="container">
-
-<!-- LOGIN / SIGNUP -->
-<div id="auth">
-  <h2>Login / Signup</h2>
-  <input type="text" id="username" placeholder="Username">
-  <input type="password" id="password" placeholder="Password">
-  <button onclick="signup()">Signup</button>
-  <button onclick="login()">Login</button>
-</div>
-
-<!-- USER DASHBOARD -->
-<div id="dashboard" class="hidden">
-  <h2>Welcome <span id="user-name"></span></h2>
-  <div class="wallet">
-    <p>Wallet Balance: <span id="wallet-balance">0</span> ₹</p>
-  </div>
-
-  <h3>Earn</h3>
-  <button onclick="earnDemo()">Click Ad / Earn ₹10</button>
-
-  <h3>Deposit Request</h3>
-  <input type="number" id="deposit-amount" placeholder="Amount to deposit">
-  <select id="deposit-method">
-    <option value="Easypaisa">Easypaisa</option>
-    <option value="JazzCash">JazzCash</option>
-    <option value="Payoneer">Payoneer</option>
-  </select>
-  <button onclick="requestDeposit()">Request Deposit</button>
-
-  <table id="user-deposits">
-    <thead><tr><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
-    <tbody></tbody>
-  </table>
-
-  <h3>Withdraw</h3>
-  <input type="number" id="withdraw-amount" placeholder="Amount to withdraw">
-  <select id="withdraw-method">
-    <option value="Easypaisa">Easypaisa</option>
-    <option value="JazzCash">JazzCash</option>
-    <option value="Payoneer">Payoneer</option>
-  </select>
-  <button onclick="requestWithdraw()">Request Withdraw</button>
-
-  <table id="user-withdraws">
-    <thead><tr><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-<!-- ADMIN PANEL -->
-<div id="admin-panel" class="hidden admin-panel">
-  <h2>Admin Panel</h2>
-  <p>Username: <strong>admin</strong></p>
-  <input type="password" id="admin-pass" placeholder="Enter admin password">
-  <button onclick="loginAdmin()">Login as Admin</button>
-
-  <div id="admin-controls" class="hidden">
-    <h3>Deposit Requests</h3>
-    <table id="admin-deposits">
-      <thead><tr><th>User</th><th>Amount</th><th>Method</th><th>Action</th></tr></thead>
-      <tbody></tbody>
-    </table>
-
-    <h3>Withdraw Requests</h3>
-    <table id="admin-withdraws">
-      <thead><tr><th>User</th><th>Amount</th><th>Method</th><th>Action</th></tr></thead>
-      <tbody></tbody>
-    </table>
-  </div>
-</div>
-
+<div class="header">NeonEarn — Full Premium Earning Platform</div>
+<div class="container"><!-- Deposit Section --><div class="card">
+<h2>Deposit Funds</h2>
+<form>
+<label for="method">Select Payment Method:</label>
+<select id="method" onchange="updateAccount()">
+<option value="jazzcash">JazzCash</option>
+<option value="easypaisa">Easypaisa</option>
+<option value="payoneer">Payoneer</option>
+</select>
+<label for="amount">Amount:</label>
+<input type="number" id="amount" placeholder="Enter deposit amount">
+<label for="txn">Transaction ID / Number:</label>
+<input type="text" id="txn" placeholder="Enter transaction ID">
+<label for="proof">Upload Proof:</label>
+<input type="file" id="proof">
+<label>Account Number / Copy:</label>
+<input type="text" id="account" value="03705519562" readonly>
+<button type="button" class="btn" onclick="copyAccount()">Copy Account Number</button>
+<button type="submit" class="btn">Submit Deposit</button>
+</form>
+</div><!-- Watch Ads Section --><div class="card">
+<h2>Watch Ads & Earn</h2>
+<p>Click the ad below and wait for the timer to complete to earn coins.</p>
+<button class="btn" onclick="startAd()">Start Ad</button>
+<div class="timer" id="timer">10</div>
+<p id="earned" style="text-align:center;color:#0f0;font-weight:bold;"></p>
+</div><!-- User Dashboard --><div class="card">
+<h2>User Dashboard</h2>
+<div class="balance">Balance: <span id="balance">0</span> coins</div>
+<button class="btn" onclick="watchAdForUser()">Watch Ads</button>
+<a href="#" class="btn" onclick="alert('Redirecting to Deposit page')">Deposit Funds</a>
+<a href="#" class="btn" onclick="alert('Redirecting to Withdraw page')">Withdraw Funds</a>
+<a href="#" class="btn" onclick="logoutUser()">Logout</a>
+</div><!-- Admin Panel --><div class="card">
+<h2>Admin Panel</h2>
+<button class="btn" onclick="alert('Manage Users')">Manage Users</button>
+<button class="btn" onclick="alert('Manage Deposits')">Manage Deposits</button>
+<button class="btn" onclick="alert('Add/Edit Ads')">Manage Ads</button>
+<button class="btn" onclick="alert('Referral System')">Referral System</button>
+</div></div>
 <script>
-let users = JSON.parse(localStorage.getItem('users')) || {};
-let withdrawRequests = JSON.parse(localStorage.getItem('withdrawRequests')) || [];
-let depositRequests = JSON.parse(localStorage.getItem('depositRequests')) || [];
-
-// SIGNUP / LOGIN
-function signup() {
-  let u = document.getElementById('username').value;
-  let p = document.getElementById('password').value;
-  if(users[u]) { alert('User exists!'); return; }
-  users[u] = { password:p, wallet:0 };
-  localStorage.setItem('users', JSON.stringify(users));
-  alert('Signup successful!');
+// Deposit Account Copy
+function copyAccount(){
+var copyText = document.getElementById('account');
+copyText.select();
+copyText.setSelectionRange(0, 99999);
+navigator.clipboard.writeText(copyText.value);
+alert('Account number copied!');
 }
+function updateAccount(){
+var method = document.getElementById('method').value;
+var accountInput = document.getElementById('account');
+if(method==='jazzcash') accountInput.value='03705519562';
+else if(method==='easypaisa') accountInput.value='03379827882';
+else if(method==='payoneer') accountInput.value='nazimkhan01123@gmail.com';
+}// Watch Ads Timer let timerInterval; function startAd(){ let timeLeft = 10; document.getElementById('earned').innerText=''; clearInterval(timerInterval); document.getElementById('timer').innerText=timeLeft; timerInterval=setInterval(()=>{ timeLeft--; document.getElementById('timer').innerText=timeLeft; if(timeLeft<=0){ clearInterval(timerInterval); document.getElementById('earned').innerText='Congratulations! You earned 5 coins.'; } },1000); }
 
-function login() {
-  let u = document.getElementById('username').value;
-  let p = document.getElementById('password').value;
-  if(users[u] && users[u].password===p) {
-    document.getElementById('auth').classList.add('hidden');
-    document.getElementById('dashboard').classList.remove('hidden');
-    document.getElementById('user-name').innerText = u;
-    updateWallet(u);
-    renderUserWithdraws(u);
-    renderUserDeposits(u);
-  } else { alert('Invalid login'); }
-}
+// User Dashboard Functions let userBalance=0; function watchAdForUser(){ let earned=5; userBalance+=earned; document.getElementById('balance').innerText=userBalance; alert('You earned '+earned+' coins!'); } function logoutUser(){ alert('Logging out...'); location.reload(); } </script>
 
-// EARNING DEMO
-function earnDemo() {
-  let u = document.getElementById('user-name').innerText;
-  users[u].wallet += 10;
-  localStorage.setItem('users', JSON.stringify(users));
-  updateWallet(u);
-}
-
-// WALLET UPDATE
-function updateWallet(u) { document.getElementById('wallet-balance').innerText = users[u].wallet; }
-
-// WITHDRAW REQUEST
-function requestWithdraw() {
-  let u = document.getElementById('user-name').innerText;
-  let amt = parseInt(document.getElementById('withdraw-amount').value);
-  let method = document.getElementById('withdraw-method').value;
-  if(amt>users[u].wallet) { alert('Insufficient balance'); return; }
-  let req = { user:u, amount:amt, method:method, status:'Pending' };
-  withdrawRequests.push(req);
-  localStorage.setItem('withdrawRequests', JSON.stringify(withdrawRequests));
-  alert('Withdraw request submitted!');
-  renderUserWithdraws(u);
-}
-
-function renderUserWithdraws(u) {
-  let tbody = document.querySelector('#user-withdraws tbody');
-  tbody.innerHTML = '';
-  withdrawRequests.filter(r=>r.user===u).forEach(r=>{
-    tbody.innerHTML += `<tr><td>${r.amount}</td><td>${r.method}</td><td>${r.status}</td></tr>`;
-  });
-}
-
-// DEPOSIT REQUEST
-function requestDeposit() {
-  let u = document.getElementById('user-name').innerText;
-  let amt = parseInt(document.getElementById('deposit-amount').value);
-  let method = document.getElementById('deposit-method').value;
-  let req = { user:u, amount:amt, method:method, status:'Pending' };
-  depositRequests.push(req);
-  localStorage.setItem('depositRequests', JSON.stringify(depositRequests));
-  alert('Deposit request submitted! Wait for admin approval.');
-  renderUserDeposits(u);
-}
-
-function renderUserDeposits(u) {
-  let tbody = document.querySelector('#user-deposits tbody');
-  tbody.innerHTML = '';
-  depositRequests.filter(r=>r.user===u).forEach(r=>{
-    tbody.innerHTML += `<tr><td>${r.amount}</td><td>${r.method}</td><td>${r.status}</td></tr>`;
-  });
-}
-
-// ADMIN LOGIN
-function loginAdmin() {
-  let pass = document.getElementById('admin-pass').value;
-  if(pass==='sweetie123') {
-    document.getElementById('admin-controls').classList.remove('hidden');
-    renderAdminWithdraws();
-    renderAdminDeposits();
-  } else { alert('Wrong password'); }
-}
-
-// ADMIN ACTIONS
-function renderAdminWithdraws() {
-  let tbody = document.querySelector('#admin-withdraws tbody');
-  tbody.innerHTML = '';
-  withdrawRequests.forEach((r,i)=>{
-    tbody.innerHTML += `<tr>
-      <td>${r.user}</td><td>${r.amount}</td><td>${r.method}</td>
-      <td>
-        <button onclick="markPaid(${i})">Mark Paid</button>
-        <button onclick="markRejected(${i})">Reject</button>
-      </td>
-    </tr>`;
-  });
-}
-
-function renderAdminDeposits() {
-  let tbody = document.querySelector('#admin-deposits tbody');
-  tbody.innerHTML = '';
-  depositRequests.forEach((r,i)=>{
-    tbody.innerHTML += `<tr>
-      <td>${r.user}</td><td>${r.amount}</td><td>${r.method}</td>
-      <td>
-        <button onclick="approveDeposit(${i})">Approve</button>
-        <button onclick="rejectDeposit(${i})">Reject</button>
-      </td>
-    </tr>`;
-  });
-}
-
-// ADMIN ACTIONS FUNCTIONS
-function markPaid(i) { withdrawRequests[i].status='Paid'; users[withdrawRequests[i].user].wallet -= withdrawRequests[i].amount; saveAll(); renderAdminWithdraws(); renderUserWithdraws(withdrawRequests[i].user);}
-function markRejected(i) { withdrawRequests[i].status='Rejected'; saveAll(); renderAdminWithdraws(); renderUserWithdraws(withdrawRequests[i].user);}
-function approveDeposit(i) { depositRequests[i].status='Approved'; users[depositRequests[i].user].wallet += depositRequests[i].amount; saveAll(); renderAdminDeposits(); renderUserDeposits(depositRequests[i].user);}
-function rejectDeposit(i) { depositRequests[i].status='Rejected'; saveAll(); renderAdminDeposits(); renderUserDeposits(depositRequests[i].user);}
-function saveAll() { localStorage.setItem('withdrawRequests', JSON.stringify(withdrawRequests)); localStorage.setItem('depositRequests', JSON.stringify(depositRequests)); localStorage.setItem('users', JSON.stringify(users)); }
-
-</script>
 </body>
 </html>
