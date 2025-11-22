@@ -1,96 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeonEarn - Ads Simulation</title>
+<title>NeonEarn — Premium Earning</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#020202; color:#fff; }
-    .header { padding:20px; text-align:center; background:linear-gradient(90deg,#00f0ff,#0077ff,#9d00ff); font-size:28px; font-weight:bold; text-shadow:0 0 15px #00eaff; }
-    .container { padding:20px; max-width:600px; margin:auto; }
-    .card { background: rgba(255,255,255,0.05); border:1px solid rgba(0,255,255,0.3); padding:20px; border-radius:15px; margin-bottom:20px; backdrop-filter:blur(10px); box-shadow:0 0 20px #00eaff40; }
-    .btn { display:block; width:100%; padding:15px; text-align:center; background:linear-gradient(90deg,#00f0ff,#0077ff); color:#000; font-weight:bold; text-decoration:none; border-radius:10px; box-shadow:0 0 20px #00f0ff80; margin-top:10px; cursor:pointer; }
-    input { width:100%; padding:10px; margin-top:10px; border-radius:8px; border:none; background:rgba(255,255,255,0.1); color:#fff; }
-    .balance { font-size:24px; text-align:center; margin:10px 0; color:#0f0; text-shadow:0 0 10px #00eaff; }
-    .timer { font-size:24px; text-align:center; margin:20px 0; color:#00f0ff; text-shadow:0 0 10px #00eaff; }
-    .ad-img { width:100%; border-radius:10px; cursor:pointer; }
+body{
+    background:#000;
+    font-family:Arial;
+    color:#fff;
+    margin:0;
+}
+header{
+    background:#1f0033;
+    padding:20px;
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    color:#0ff;
+    text-shadow:0 0 10px #0ff;
+}
+nav{
+    display:flex;
+    justify-content:space-around;
+    background:#110022;
+    padding:10px;
+}
+nav a{
+    color:#0ff;
+    text-decoration:none;
+    font-weight:bold;
+    padding:10px 15px;
+    border:1px solid #0ff;
+    border-radius:8px;
+    box-shadow:0 0 10px #0ff;
+}
+section{
+    padding:20px;
+}
+.card{
+    background:#120024;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:10px;
+    border:1px solid #0ff;
+    box-shadow:0 0 15px #0ff;
+}
+input, select{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border-radius:8px;
+    border:1px solid #0ff;
+    background:#000;
+    color:#0ff;
+}
+button{
+    width:100%;
+    background:#0ff;
+    color:#000;
+    padding:12px;
+    margin-top:10px;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:bold;
+}
+.ad-box{
+    background:#0a0014;
+    padding:15px;
+    border:1px solid #0ff;
+    border-radius:8px;
+    margin-bottom:15px;
+}
 </style>
 </head>
 <body>
-<div class="header">NeonEarn - Ads Simulation</div>
-<div class="container">
 
-<div class="card">
-<h2>User Dashboard</h2>
-<div class="balance">Balance: <span id="balance">0</span> coins</div>
-<label>Deposit Amount:</label>
-<input type="number" id="depositAmount" placeholder="Enter amount">
-<button class="btn" onclick="deposit()">Deposit</button>
-<label>Withdraw Amount:</label>
-<input type="number" id="withdrawAmount" placeholder="Enter amount">
-<button class="btn" onclick="withdraw()">Withdraw</button>
-</div>
+<header>💎 NeonEarn — Premium Neon Earning 💎</header>
 
-<div class="card">
-<h2>Watch Ads</h2>
-<p>Click on the ad and wait for timer to complete to earn coins.</p>
-<img src="https://via.placeholder.com/500x200?text=Ad+1" id="adImage" class="ad-img" onclick="startAd()">
-<div class="timer" id="timer">10</div>
-<p id="earned" style="text-align:center;color:#0f0;font-weight:bold;"></p>
-</div>
+<nav>
+  <a href="#dash">Dashboard</a>
+  <a href="#ads">Ads</a>
+  <a href="#deposit">Deposit</a>
+  <a href="#withdraw">Withdraw</a>
+</nav>
 
-<div class="card">
-<h2>Admin Panel (Simulation)</h2>
-<p>Dummy users:</p>
-<ul id="adminUsers">
-<li>John - 50 coins</li>
-<li>Jane - 30 coins</li>
-</ul>
-<button class="btn" onclick="resetBalance()">Reset All Balances</button>
-</div>
+<section id="dash">
+  <div class="card">
+    <h2>👤 User Dashboard</h2>
+    <p><b>Balance:</b> 0 PKR</p>
+    <p><b>Referral Code:</b> NEON123</p>
+  </div>
+</section>
 
-</div>
-<script>
-let balance = 0;
-let ads = [
-    'https://via.placeholder.com/500x200?text=Ad+1',
-    'https://via.placeholder.com/500x200?text=Ad+2',
-    'https://via.placeholder.com/500x200?text=Ad+3'
-];
-let currentAd = 0;
+<section id="ads">
+  <div class="card">
+    <h2>📺 Watch Ads & Earn</h2>
 
-function deposit(){
-    let amount = parseFloat(document.getElementById('depositAmount').value);
-    if(amount>0){ balance += amount; alert('Deposit successful! '+amount+' coins added.'); document.getElementById('balance').innerText = balance; }
-    else { alert('Enter valid amount'); }
-}
+    <div class="ad-box">Ad #1 — Click & Wait 10 Seconds</div>
+    <div class="ad-box">Ad #2 — Click & Wait 10 Seconds</div>
+    <div class="ad-box">Ad #3 — Click & Wait 10 Seconds</div>
+    <div class="ad-box">Ad #4 — Click & Wait 10 Seconds</div>
 
-function withdraw(){
-    let amount = parseFloat(document.getElementById('withdrawAmount').value);
-    if(amount>0 && amount<=balance){ balance -= amount; alert('Withdrawal successful! '+amount+' coins deducted.'); document.getElementById('balance').innerText = balance; }
-    else { alert('Invalid amount'); }
-}
+  </div>
+</section>
 
-function startAd(){
-    let time = 10;
-    document.getElementById('earned').innerText='';
-    let timerInterval = setInterval(()=>{
-        document.getElementById('timer').innerText=time;
-        time--;
-        if(time<0){ 
-            clearInterval(timerInterval); 
-            let earnedCoins = 5;
-            balance += earnedCoins;
-            document.getElementById('balance').innerText=balance;
-            document.getElementById('earned').innerText='You earned '+earnedCoins+' coins!';
-            currentAd = (currentAd+1)%ads.length;
-            document.getElementById('adImage').src = ads[currentAd];
-            document.getElementById('timer').innerText='10';
-        }
-    },1000);
-}
+<section id="deposit">
+  <div class="card">
+    <h2>💰 Deposit</h2>
+    <p>JazzCash: <b>03705519562</b></p>
+    <p>EasyPaisa: <b>03379827882</b></p>
+    <p>Payoneer: <b>nazimkhan01123@gmail.com</b></p>
 
-function resetBalance(){ balance=0; document.getElementById('balance').innerText=balance; alert('All balances reset!'); }
-</script>
+    <select>
+      <option>Select Method</option>
+      <option>JazzCash</option>
+      <option>EasyPaisa</option>
+      <option>Payoneer</option>
+    </select>
+
+    <input type="number" placeholder="Amount">
+    <input type="text" placeholder="Transaction ID">
+    <button>Upload Proof</button>
+  </div>
+</section>
+
+<section id="withdraw">
+  <div class="card">
+    <h2>💸 Withdraw</h2>
+
+    <select>
+      <option>Select Withdraw Method</option>
+      <option>JazzCash</option>
+      <option>EasyPaisa</option>
+      <option>Bank</option>
+    </select>
+
+    <input type="number" placeholder="Amount">
+    <input type="text" placeholder="Account Number">
+    <input type="text" placeholder="Full Name">
+    <button>Request Withdraw</button>
+  </div>
+</section>
+
 </body>
 </html>
