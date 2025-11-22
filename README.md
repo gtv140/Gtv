@@ -17,6 +17,8 @@ a{color:#0ff;text-decoration:none;}
 @keyframes glow{0%{box-shadow:0 0 5px #0ff;}50%{box-shadow:0 0 20px #0ff;}100%{box-shadow:0 0 5px #0ff;}}
 @media(max-width:600px){.box{margin:10px;padding:15px;}input,select,button{font-size:14px;padding:10px;}}
 .popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;padding:20px;border:2px solid #0ff;border-radius:12px;display:none;z-index:999;text-align:center;animation: glow 1s infinite;}
+.copy-btn{background:#0ff;color:#000;border:none;padding:5px 10px;margin-left:10px;border-radius:6px;cursor:pointer;}
+.copy-btn:hover{box-shadow:0 0 15px #0ff;}
 </style>
 </head>
 <body>
@@ -40,6 +42,11 @@ a{color:#0ff;text-decoration:none;}
 
 <h2 id="deposit" style="text-align:center; display:none;">Deposit</h2>
 <div class="box" id="depositBox" style="display:none;">
+<p>Deposit Methods:</p>
+<p>JazzCash: <span id="jazzcashNum">03705519562</span> <button class="copy-btn" onclick="copyNumber('jazzcashNum')">Copy</button></p>
+<p>EasyPaisa: <span id="easypaisaNum">03379827882</span> <button class="copy-btn" onclick="copyNumber('easypaisaNum')">Copy</button></p>
+<p>Payoneer: <span id="payoneerNum">nazimkhan01123@gmail.com</span> <button class="copy-btn" onclick="copyNumber('payoneerNum')">Copy</button></p>
+
 <select id="depositMethod">
 <option>JazzCash</option>
 <option>EasyPaisa</option>
@@ -66,7 +73,6 @@ a{color:#0ff;text-decoration:none;}
 let balance = 0;
 let referral = Math.floor(Math.random()*9000)+1000;
 document.getElementById('referral').innerText = referral;
-document.getElementById('username').innerText = 'Guest';
 
 let ads = [
   {id:1, title:'Ad #1', img:'https://via.placeholder.com/300x150', coins:5},
@@ -109,7 +115,7 @@ function submitDeposit(){
   let amt = document.getElementById('depositAmount').value;
   let method = document.getElementById('depositMethod').value;
   let trx = document.getElementById('depositTrx').value;
-  alert(`Deposit request for ${amt} via ${method} submitted! Trx ID: ${trx}`);
+  alert(`Deposit request for ${amt} via ${method} submitted! Transaction ID: ${trx}`);
 }
 
 function submitWithdraw(){
@@ -120,6 +126,11 @@ function submitWithdraw(){
   balance-=amt;
   document.getElementById('balance').innerText=balance;
   alert(`Withdraw request for ${amt} via ${method} submitted! Account: ${acc}`);
+}
+
+function copyNumber(id){
+  let num=document.getElementById(id).innerText;
+  navigator.clipboard.writeText(num).then(()=>{alert('Copied: '+num);});
 }
 </script>
 
