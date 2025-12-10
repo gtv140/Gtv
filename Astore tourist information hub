@@ -58,10 +58,10 @@
     <h2>Car Booking</h2>
     <form>
         <label>Your Name</label>
-        <input type="text" placeholder="Enter your name" required />
+        <input type="text" placeholder="Asimkhanzai" required />
 
         <label>Phone Number</label>
-        <input type="text" placeholder="03XXXXXXXXX" required />
+        <input type="text" placeholder="03555396518" required />
 
         <label>Pick-up Date</label>
         <input type="date" required />
