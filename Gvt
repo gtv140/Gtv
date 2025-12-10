@@ -1,12 +1,86 @@
-index.html
-<html>
+<Astore>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gvt Project</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Astore Tourist Information Hub</title>
+<style>
+    body {font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f2f2f2;}
+    header {background: #1e73be; padding: 20px; text-align: center; color: white;}
+    .section {padding: 20px; background: white; margin: 15px; border-radius: 10px;}
+    h2 {margin-top: 0;}
+    label {font-weight: bold;}
+    input, select, textarea {
+        width: 100%; padding: 10px; margin: 6px 0 15px 0;
+        border: 1px solid #ccc; border-radius: 6px;
+    }
+    button {
+        background: #1e73be; color: white; padding: 12px; width: 100%;
+        border: none; border-radius: 6px; font-size: 16px; cursor: pointer;
+    }
+    button:hover {background: #155a92;}
+</style>
 </head>
 <body>
-  <h1>Welcome to Gvt Investment Demo</h1>
-  <p>This page is for educational and testing purposes only.</p>
+
+<header>
+    <h1>Astore Tourist Information Hub</h1>
+    <p>Room & Car Online Booking Service</p>
+</header>
+
+<div class="section">
+    <h2>Room Booking</h2>
+    <form>
+        <label>Your Name</label>
+        <input type="text" placeholder="Asim khanzai" required />
+
+        <label>Phone Number</label>
+        <input type="text" placeholder="03555396519" required />
+
+        <label>Check-in Date</label>
+        <input type="date" required />
+
+        <label>Check-out Date</label>
+        <input type="date" required />
+
+        <label>Select Room Type</label>
+        <select required>
+            <option>Standard Room</option>
+            <option>Luxury Room</option>
+            <option>Family Suite</option>
+        </select>
+
+        <button type="submit">Book Room</button>
+    </form>
+</div>
+
+<div class="section">
+    <h2>Car Booking</h2>
+    <form>
+        <label>Your Name</label>
+        <input type="text" placeholder="Enter your name" required />
+
+        <label>Phone Number</label>
+        <input type="text" placeholder="03XXXXXXXXX" required />
+
+        <label>Pick-up Date</label>
+        <input type="date" required />
+
+        <label>Select Car</label>
+        <select required>
+            <option>Corolla</option>
+            <option>Hiace</option>
+            <option>Prado</option>
+            <option>Local Jeep for Astore</option>
+        </select>
+
+        <button type="submit">Book Car</button>
+    </form>
+</div>
+
+<footer style="text-align:center; padding:15px; font-size:14px;">
+    © 2025 Astore Tourist Hub — All Rights Reserved
+</footer>
+
 </body>
 </html>
