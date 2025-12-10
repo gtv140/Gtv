@@ -1,138 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neon Earn Ads</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Astore Tourist Information Hub</title>
 <style>
-body{margin:0;font-family:Arial;background:#000;color:#0ff;}
-h1{text-align:center;font-size:2em;margin:20px;text-shadow:0 0 20px #0ff,0 0 40px #0ff;}
-.box{background:#111;margin:20px;padding:20px;border-radius:12px;border:1px solid #0ff;box-shadow:0 0 20px #0ff;transition:0.5s;}
-input,select,button{width:100%;padding:12px;margin:8px 0;border-radius:10px;border:none;font-size:16px;}
-button,.btn{background:#0ff;color:#000;font-weight:bold;cursor:pointer;transition:0.3s;}
-button:hover,.btn:hover{box-shadow:0 0 20px #0ff,0 0 40px #0ff;text-shadow:0 0 10px #000;}
-.ads-box{background:#222;padding:12px;margin-bottom:12px;border-radius:12px;border:1px dashed #0ff;cursor:pointer;transition:0.3s;animation: glow 2s infinite;}
-.ads-box:hover{box-shadow:0 0 30px #0ff,0 0 60px #0ff;}
-a{color:#0ff;text-decoration:none;}
-@keyframes glow{0%{box-shadow:0 0 5px #0ff;}50%{box-shadow:0 0 20px #0ff;}100%{box-shadow:0 0 5px #0ff;}}
-@media(max-width:600px){.box{margin:10px;padding:15px;}input,select,button{font-size:14px;padding:10px;}}
-.popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;padding:20px;border:2px solid #0ff;border-radius:12px;display:none;z-index:999;text-align:center;animation: glow 1s infinite;}
-.copy-btn{background:#0ff;color:#000;border:none;padding:5px 10px;margin-left:10px;border-radius:6px;cursor:pointer;}
-.copy-btn:hover{box-shadow:0 0 15px #0ff;}
+    body {font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f2f2f2;}
+    header {background: #1e73be; padding: 20px; text-align: center; color: white;}
+    .section {padding: 20px; background: white; margin: 15px; border-radius: 10px;}
+    h2 {margin-top: 0;}
+    label {font-weight: bold;}
+    input, select, textarea {
+        width: 100%; padding: 10px; margin: 6px 0 15px 0;
+        border: 1px solid #ccc; border-radius: 6px;
+    }
+    button {
+        background: #1e73be; color: white; padding: 12px; width: 100%;
+        border: none; border-radius: 6px; font-size: 16px; cursor: pointer;
+    }
+    button:hover {background: #155a92;}
 </style>
 </head>
 <body>
 
-<div id="popup" class="popup">🎉 Referral Bonus +5 Coins! 🎉</div>
+<header>
+    <h1>Astore Tourist Information Hub</h1>
+    <p>Room & Car Online Booking Service</p>
+</header>
 
-<h1>✨ Neon Earn Ads Demo ✨</h1>
+<div class="section">
+    <h2>Room Booking</h2>
+    <form>
+        <label>Your Name</label>
+        <input type="text" placeholder="Enter your name" required />
 
-<div class="box" id="dashboard">
-<p><b>User:</b> <span id="username">Guest</span></p>
-<p><b>Balance:</b> <span id="balance">0</span> coins</p>
-<p><b>Referral Code:</b> <span id="referral">0000</span></p>
+        <label>Phone Number</label>
+        <input type="text" placeholder="03XXXXXXXXX" required />
 
-<button class="btn" onclick="showSection('ads')">Watch Ads</button>
-<button class="btn" onclick="showSection('deposit')">Deposit</button>
-<button class="btn" onclick="showSection('withdraw')">Withdraw</button>
+        <label>Check-in Date</label>
+        <input type="date" required />
+
+        <label>Check-out Date</label>
+        <input type="date" required />
+
+        <label>Select Room Type</label>
+        <select required>
+            <option>Standard Room</option>
+            <option>Luxury Room</option>
+            <option>Family Suite</option>
+        </select>
+
+        <button type="submit">Book Room</button>
+    </form>
 </div>
 
-<h2 id="ads" style="text-align:center; display:none;">Watch Ads & Earn</h2>
-<div class="box" id="adsBox" style="display:none;"></div>
+<div class="section">
+    <h2>Car Booking</h2>
+    <form>
+        <label>Your Name</label>
+        <input type="text" placeholder="Enter your name" required />
 
-<h2 id="deposit" style="text-align:center; display:none;">Deposit</h2>
-<div class="box" id="depositBox" style="display:none;">
-<p>Deposit Methods:</p>
-<p>JazzCash: <span id="jazzcashNum">03705519562</span> <button class="copy-btn" onclick="copyNumber('jazzcashNum')">Copy</button></p>
-<p>EasyPaisa: <span id="easypaisaNum">03379827882</span> <button class="copy-btn" onclick="copyNumber('easypaisaNum')">Copy</button></p>
-<p>Payoneer: <span id="payoneerNum">nazimkhan01123@gmail.com</span> <button class="copy-btn" onclick="copyNumber('payoneerNum')">Copy</button></p>
+        <label>Phone Number</label>
+        <input type="text" placeholder="03XXXXXXXXX" required />
 
-<select id="depositMethod">
-<option>JazzCash</option>
-<option>EasyPaisa</option>
-<option>Payoneer</option>
-</select>
-<input id="depositAmount" type="number" placeholder="Amount">
-<input id="depositTrx" placeholder="Transaction ID">
-<button onclick="submitDeposit()">Submit Deposit</button>
+        <label>Pick-up Date</label>
+        <input type="date" required />
+
+        <label>Select Car</label>
+        <select required>
+            <option>Corolla</option>
+            <option>Hiace</option>
+            <option>Prado</option>
+            <option>Local Jeep for Astore</option>
+        </select>
+
+        <button type="submit">Book Car</button>
+    </form>
 </div>
 
-<h2 id="withdraw" style="text-align:center; display:none;">Withdraw</h2>
-<div class="box" id="withdrawBox" style="display:none;">
-<select id="withdrawMethod">
-<option>JazzCash</option>
-<option>EasyPaisa</option>
-<option>Bank</option>
-</select>
-<input id="withdrawAmount" type="number" placeholder="Amount">
-<input id="withdrawAcc" placeholder="Account / Name">
-<button onclick="submitWithdraw()">Submit Withdraw</button>
-</div>
-
-<script>
-let balance = 0;
-let referral = Math.floor(Math.random()*9000)+1000;
-document.getElementById('referral').innerText = referral;
-
-let ads = [
-  {id:1, title:'Ad #1', img:'https://via.placeholder.com/300x150', coins:5},
-  {id:2, title:'Ad #2', img:'https://via.placeholder.com/300x150', coins:10},
-  {id:3, title:'Ad #3', img:'https://via.placeholder.com/300x150', coins:15}
-];
-
-function showSection(sec){
-  document.getElementById('ads').style.display='none';
-  document.getElementById('adsBox').style.display='none';
-  document.getElementById('deposit').style.display='none';
-  document.getElementById('depositBox').style.display='none';
-  document.getElementById('withdraw').style.display='none';
-  document.getElementById('withdrawBox').style.display='none';
-  
-  if(sec==='ads'){document.getElementById('ads').style.display='block'; document.getElementById('adsBox').style.display='block'; renderAds();}
-  if(sec==='deposit'){document.getElementById('deposit').style.display='block'; document.getElementById('depositBox').style.display='block';}
-  if(sec==='withdraw'){document.getElementById('withdraw').style.display='block'; document.getElementById('withdrawBox').style.display='block';}
-}
-
-function renderAds(){
-  let box=document.getElementById('adsBox');
-  box.innerHTML='';
-  ads.forEach(ad=>{
-    let div=document.createElement('div');
-    div.className='ads-box';
-    div.innerHTML=`<p><b>${ad.title}</b></p><img src="${ad.img}" width="100%"><p>Coins: ${ad.coins}</p>`;
-    div.onclick=()=>{balance+=ad.coins; document.getElementById('balance').innerText=balance; showReferralPopup();};
-    box.appendChild(div);
-  });
-}
-
-function showReferralPopup(){
-  let p=document.getElementById('popup');
-  p.style.display='block';
-  setTimeout(()=>{p.style.display='none';},3000);
-}
-
-function submitDeposit(){
-  let amt = document.getElementById('depositAmount').value;
-  let method = document.getElementById('depositMethod').value;
-  let trx = document.getElementById('depositTrx').value;
-  alert(`Deposit request for ${amt} via ${method} submitted! Transaction ID: ${trx}`);
-}
-
-function submitWithdraw(){
-  let amt = document.getElementById('withdrawAmount').value;
-  let method = document.getElementById('withdrawMethod').value;
-  let acc = document.getElementById('withdrawAcc').value;
-  if(amt>balance){alert('Insufficient balance!'); return;}
-  balance-=amt;
-  document.getElementById('balance').innerText=balance;
-  alert(`Withdraw request for ${amt} via ${method} submitted! Account: ${acc}`);
-}
-
-function copyNumber(id){
-  let num=document.getElementById(id).innerText;
-  navigator.clipboard.writeText(num).then(()=>{alert('Copied: '+num);});
-}
-</script>
+<footer style="text-align:center; padding:15px; font-size:14px;">
+    © 2025 Astore Tourist Hub — All Rights Reserved
+</footer>
 
 </body>
 </html>
